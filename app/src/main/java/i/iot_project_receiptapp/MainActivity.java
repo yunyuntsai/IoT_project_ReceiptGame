@@ -1,9 +1,8 @@
 package i.iot_project_receiptapp;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -24,12 +22,55 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });*/
+        com.github.clans.fab.FloatingActionButton fabSearch = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.menu_item1);
+        assert fabSearch != null;
+        fabSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent searchIntent = new Intent();
+                searchIntent.setClass(MainActivity.this, QRreader.class);
+                startActivity(searchIntent);
+            }
+        });
+        com.github.clans.fab.FloatingActionButton fabMessenger = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.menu_item2);
+        assert fabMessenger != null;
+        fabMessenger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                Uri uri = Uri.parse("fb-messenger://user/");
+                String peopleId = "1054916604587192";
+                //Log.d("id", ""+ LoginActivity.id.toString());
+                uri = ContentUris.withAppendedId(uri, Long.parseLong(peopleId));
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                */
+              /*  Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent
+                        .putExtra(Intent.EXTRA_TEXT,
+                                "<---YOUR TEXT HERE--->.");
+                sendIntent.setType("text/plain");
+                sendIntent.setPackage("com.facebook.orca");
+                try
+                {
+                    startActivity(sendIntent);
+                }
+                catch (android.content.ActivityNotFoundException ex)
+                {
+                    //ToastHelper.MakeShortText("Please Install Facebook Messenger");
+                }*/
+                Intent searchIntent = new Intent();
+                searchIntent.setClass(MainActivity.this, QRreader.class);
+                startActivity(searchIntent);
             }
         });
 
