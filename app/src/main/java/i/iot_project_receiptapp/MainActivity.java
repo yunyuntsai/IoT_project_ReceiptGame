@@ -1,5 +1,9 @@
 package i.iot_project_receiptapp;
 
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,10 +15,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import i.iot_project_receiptapp.Data.ReceiptList;
+import i.iot_project_receiptapp.ReceiptMng.receiptMng;
+import i.iot_project_receiptapp.ReceiptDataBase.Receipt;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    public final static int BASE_YEAR = 106;
+    ReceiptList mReceiptData;
+    MyStorage myStorage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +33,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mReceiptData = new ReceiptList(this);
+        //myStorage = new MyStorage(mReceiptData);
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +49,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Intent searchIntent = new Intent();
-                searchIntent.setClass(MainActivity.this, QRreader.class);
+                searchIntent.setClass(MainActivity.this, MyStorage.class);
                 startActivity(searchIntent);
             }
         });
@@ -69,7 +82,7 @@ public class MainActivity extends AppCompatActivity
                     //ToastHelper.MakeShortText("Please Install Facebook Messenger");
                 }*/
                 Intent searchIntent = new Intent();
-                searchIntent.setClass(MainActivity.this, QRreader.class);
+                searchIntent.setClass(MainActivity.this,MyStorage.class);
                 startActivity(searchIntent);
             }
         });
@@ -82,6 +95,19 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        // TODO Auto-generated method stub
+        super.onResume();
+
     }
 
     @Override
@@ -123,8 +149,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_QRcode) {
-            Intent i = new Intent(MainActivity.this, QRreader.class);
-            startActivity(i);
+            toScan();
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
             Intent i = new Intent(MainActivity.this, MyStorage.class);
@@ -144,4 +169,87 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0) {
+
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getStringExtra("SCAN_RESULT");
+                if(receiptMng.parserQRcode(mReceiptData,result)==1){
+                    showNextDialog(R.string.add_success);//新增成功
+
+                }else{
+                    showNextDialog(R.string.add_isExitTip);//統一發票已存在
+                }
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+            }
+        }
+    }
+    private void showNextDialog(int id){
+        showNextDialog(getString(id));
+    }
+    private void showNextDialog(String msg){
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle(msg);
+        ab.setNegativeButton(R.string.alert_cancel, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                // TODO Auto-generated method stub
+                arg0.cancel();
+            }
+        });
+        ab.setPositiveButton(R.string.continue_scan, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                // TODO Auto-generated method stub
+                toScan();
+                arg0.cancel();
+            }
+        });
+        ab.create().show();
+    }
+
+    /**儲存統一發票*/
+    private boolean  saveReceipt(String code,String number,String date){
+        if(!code.matches("[A-Z][A-Z]")||number.length()!=8){
+            Toast.makeText(this, getString(R.string.input_tip_current_number), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        Receipt receipt = new Receipt();
+        receipt.setCreateDate(date);
+        receipt.setPeriod(receiptMng.getPeriod(Integer.valueOf(date.substring(3, 5))).ordinal());
+        receipt.setReceiptID(code+number);
+        receipt.setStatus(false);
+        receipt.setAwards(0);
+        if(mReceiptData.addReceipt(receipt)==ReceiptList.RECEIPT_IS_EXIST){
+            Toast.makeText(this, getString(R.string.add_isExitTip), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        Toast.makeText(this, getString(R.string.add_success), Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
+    public void toScan() {
+        try {
+
+            Intent intent = new Intent(
+                    "com.google.zxing.client.android.SCAN");
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            startActivityForResult(intent, 0);
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            Toast.makeText(this, "ERROR:" + e, Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+
+
 }

@@ -3,49 +3,56 @@ package i.iot_project_receiptapp;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.AbsListView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-import i.iot_project_receiptapp.view.SwipeListLayout;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import android.util.Log;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import i.iot_project_receiptapp.Data.ReceiptList;
+import i.iot_project_receiptapp.ReceiptDataBase.Receipt;
+import i.iot_project_receiptapp.view.SwipeListLayout;
 
 /**
  * Created by tsaiyunyun on 2017/5/18.
  */
 public class MonthList extends AppCompatActivity {
-    ListView List;
+    String TAG = "Monthlist";
+    ListView mListView;
     ArrayAdapter<String> adapter;
     public static final int CHOICE_MODE_MULTIPLE = 2;
-    private static String MONTH;
-    ReceiptManager RM = ReceiptManager.getRM(this);
+    private static long MONTH;
+    ReceiptList mReceiptData;
     //MyStorage ST = new MyStorage();
     private Set<SwipeListLayout> sets = new HashSet();
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_single);
-        List = (ListView) findViewById(R.id.listView1);
+        //nListView = (ListView)findViewById(R.id.listView1);
+        mListView = (ListView) findViewById(R.id.listView1);
+        mReceiptData = new ReceiptList(this);
         //Log.i("OUTPUT ", MONTH);
-        Toast.makeText(MonthList.this, getMonth(), Toast.LENGTH_LONG).show();
-        adapter = new ArrayAdapter<>(this , android.R.layout.simple_list_item_multiple_choice , RM.getList(getMonth()));
-        List.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        List.setItemChecked(2, true);
-        List.setAdapter(adapter);
-        List.setAdapter(new ListAdapter());
+
+
+        if (getMonth() == 0) populateListView1();
+        else if (getMonth() == 1) populateListView2();
+        else if (getMonth() == 2) populateListView3();
+        else if (getMonth() == 3) populateListView4();
+        else if (getMonth() == 4) populateListView5();
         /////////////////////delete////////////
-        List.setOnScrollListener(new OnScrollListener() {
+        mListView.setOnScrollListener(new OnScrollListener() {
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -77,35 +84,99 @@ public class MonthList extends AppCompatActivity {
         for (int i=0;i < count;i++) {
             if(!checkedItemPositions.get(i)) UPdatelist(i);
             else {
-
             }
         }*/
 
     }
 
-    public void UPdatelist(int i){
-        ArrayList<String> updatedList = new ArrayList<String>(); //initialize the second ArrayList
-        ListView List = (ListView) findViewById(R.id.listView1);
+    private void populateListView1(){
+        Log.d(TAG,"populateListView : displaying data in the listview");
 
-        updatedList.add( RM.getList(getMonth()).get(i));
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_multiple_choice, updatedList);
+        List<Receipt> data = mReceiptData.getReceiptList("106",0);
+        ArrayList<String> ListData = new ArrayList<>();
+        if(data.size()>0) {
+            for (Receipt item:data){
+                ListData.add(item.getReceiptID());
+            }
+        }
+        android.widget.ListAdapter adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,ListData);
+        mListView.setAdapter(adapter);
+        mListView.setAdapter(new ListAdapter());
 
-        List.setAdapter(adapter);
+    }
+    private void populateListView2(){
+        Log.d(TAG,"populateListView : displaying data in the listview");
+
+        List<Receipt> data = mReceiptData.getReceiptList("106",1);
+        ArrayList<String> ListData = new ArrayList<>();
+        if(data.size()>0) {
+            for (Receipt item:data){
+                ListData.add(item.getReceiptID());
+            }
+        }
+        android.widget.ListAdapter adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,ListData);
+        mListView.setAdapter(adapter);
+        mListView.setAdapter(new ListAdapter());
+
+    }
+    private void populateListView3(){
+        Log.d(TAG,"populateListView : displaying data in the listview");
+
+        List<Receipt> data = mReceiptData.getReceiptList("106",2);
+        ArrayList<String> ListData = new ArrayList<>();
+        if(data.size()>0) {
+            for (Receipt item:data){
+                ListData.add(item.getReceiptID());
+            }
+        }
+        android.widget.ListAdapter adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,ListData);
+        mListView.setAdapter(adapter);
+        mListView.setAdapter(new ListAdapter());
+
+    }
+    private void populateListView4(){
+        Log.d(TAG,"populateListView : displaying data in the listview");
+
+        List<Receipt> data = mReceiptData.getReceiptList("106",3);
+        ArrayList<String> ListData = new ArrayList<>();
+        if(data.size()>0) {
+            for (Receipt item:data){
+                ListData.add(item.getReceiptID());
+            }
+        }
+        android.widget.ListAdapter adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,ListData);
+        mListView.setAdapter(adapter);
+        mListView.setAdapter(new ListAdapter());
+
+    }
+    private void populateListView5(){
+        Log.d(TAG,"populateListView : displaying data in the listview");
+
+        List<Receipt> data = mReceiptData.getReceiptList("106",4);
+        ArrayList<String> ListData = new ArrayList<>();
+        if(data.size()>0) {
+            for (Receipt item:data){
+                ListData.add(item.getReceiptID());
+            }
+        }
+        android.widget.ListAdapter adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,ListData);
+        mListView.setAdapter(adapter);
+        mListView.setAdapter(new ListAdapter());
+
+    }
+
+    private  void ToastMessage(String message){
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     }
 
 
-
-
-
-
-    public static void setMonth(String id){
+    public static void setMonth(long id){
         //i/iot_project_receiptapp/MyStorage.java:17
         MONTH = id;
     }
 
-    public String getMonth(){
-        return MONTH;
+    public int getMonth(){
+        return (int)MONTH;
     }
 
     class MyOnSlipStatusListener implements SwipeListLayout.OnSwipeStatusListener {
@@ -146,15 +217,15 @@ public class MonthList extends AppCompatActivity {
     }
 
     class ListAdapter extends BaseAdapter {
-
+        List<Receipt> data = mReceiptData.getReceiptList("106",getMonth());
         @Override
         public int getCount() {
-            return RM.getList(getMonth()).size();
+            return mReceiptData.getReceiptList("106",getMonth()).size();
         }
 
         @Override
         public Object getItem(int arg0) {
-            return RM.getList(getMonth()).get(arg0);
+            return data.get(arg0);
         }
 
         @Override
@@ -169,7 +240,7 @@ public class MonthList extends AppCompatActivity {
                         R.layout.slip_list_item, null);
             }
             TextView tv_name = (TextView) view.findViewById(R.id.tv_name);
-            tv_name.setText(RM.getList(getMonth()).get(arg0));
+            tv_name.setText(data.get(arg0).getReceiptID());
             final SwipeListLayout sll_main = (SwipeListLayout) view
                     .findViewById(R.id.sll_main);
             TextView tv_top = (TextView) view.findViewById(R.id.tv_top);
@@ -181,9 +252,9 @@ public class MonthList extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     sll_main.setStatus(SwipeListLayout.Status.Close, true);
-                    String str = RM.getList(getMonth()).get(arg0);
-                    RM.getList(getMonth()).remove(arg0);
-                    RM.getList(getMonth()).add(0, str);
+                    Receipt receipt = data.get(arg0);
+                    mReceiptData.deleteReceipt(data.get(arg0));
+                    mReceiptData.getReceiptList("106",getMonth()).add(0,receipt);
                     notifyDataSetChanged();
                 }
             });
@@ -192,12 +263,13 @@ public class MonthList extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     sll_main.setStatus(SwipeListLayout.Status.Close, true);
-                    RM.getList(getMonth()).remove(arg0);
+                    mReceiptData.deleteReceipt(data.get(arg0));
                     notifyDataSetChanged();
                 }
             });
             return view;
         }
 
+
     }
-}
+    }
