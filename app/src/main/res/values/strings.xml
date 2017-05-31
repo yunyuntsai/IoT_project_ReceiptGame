@@ -55,5 +55,9 @@
     <string name="delete_tip_receipt">"發票號碼:"&#038;id\n發票日期:&#038;date</string>
     <string name="repair_receipt">修改發票</string>
     <string name="repair_success">修改成功</string>
-
+    <string name="hello_world">Hello world!</string>
+    <string name="on">Turn On</string>
+    <string name="off">Turn Off</string>
+    <string name="Visible">Get Visible</string>
+    <string name="List">List Devices</string>
 </resources>
