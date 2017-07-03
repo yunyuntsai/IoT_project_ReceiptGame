@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="support-v4-21.0.3">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/ZXingLibs/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/jars/libs/internal_impl-21.0.3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/ZXingLibs/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/ZXingLibs/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/25c0b8d5da45e7be8c1cc36afd4e0bc48056e3f6/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/25c0b8d5da45e7be8c1cc36afd4e0bc48056e3f6/output/jars/libs/internal_impl-21.0.3.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/25c0b8d5da45e7be8c1cc36afd4e0bc48056e3f6/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

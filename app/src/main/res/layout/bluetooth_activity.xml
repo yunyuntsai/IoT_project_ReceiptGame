@@ -10,61 +10,82 @@
 
     <ScrollView
         android:id="@+id/scrollView1"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="96dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentEnd="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:text="       Bluetooth Connect"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColorLink="@color/colorAccent"
+                android:textSize="30sp" />
 
             <Button
                 android:id="@+id/button1"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:freezesText="false"
                 android:onClick="on"
                 android:text="@string/on" />
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
                 android:onClick="visible"
                 android:text="@string/Visible" />
 
             <Button
                 android:id="@+id/button3"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
                 android:onClick="list"
-                android:text="@string/List" />
+                android:text="Bluetooth  List" />
 
             <Button
                 android:id="@+id/button4"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
                 android:onClick="off"
                 android:text="@string/off" />
 
             <ListView
                 android:id="@+id/listView1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible" >
+                style="@style/Widget.AppCompat.Light.ListView.DropDown"
+                android:layout_width="180dp"
+                android:layout_height="118dp"
+                android:layout_marginLeft="80dp"
+                android:textAlignment="center"
+                android:textDirection="firstStrong"
+                android:theme="@android:style/Widget.Material.Light.ScrollView"
+                android:visibility="visible"
+                tools:targetApi="@color/colorAccent">
 
             </ListView>
-
+            <TextView
+                android:id="@+id/connecting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColorLink="@color/colorAccent"
+                android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>
 

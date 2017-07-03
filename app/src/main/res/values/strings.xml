@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IoT_project_ReceiptApp</string>
+    <string name="app_name">發票小寵物</string>
     
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -60,4 +60,13 @@
     <string name="off">Turn Off</string>
     <string name="Visible">Get Visible</string>
     <string name="List">List Devices</string>
+
+
+
+
+    <string name="title_activity_main">Bluetooth</string>
+    <string name="btn_ON">LED ON</string>
+    <string name="btn_OFF">LED OFF</string>
+
+
 </resources>

@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="i.iot_project_receiptapp.MainActivity">
+
+
+
+
+    <include
+        layout="@layout/fragment_page"
+        android:visibility="visible" />
+
+
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,42 +25,108 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorAccent"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
-
     </android.support.design.widget.AppBarLayout>
-    <include layout="@layout/content_main" />
 
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:clickable="false"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+    </android.support.v4.view.ViewPager>
+
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="100dp"
+        app:srcCompat="@android:drawable/ic_media_rew" />
+
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="275dp"
+        android:layout_marginTop="100dp"
+        app:srcCompat="@android:drawable/ic_media_ff" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
+        android:layout_width="104dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16sp"
-        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_gravity="bottom|end"
-        app:menu_colorPressed="#00AAAA"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
         app:menu_colorNormal="#00AAAA"
-        >
+        app:menu_colorPressed="#00AAAA">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/menu_item1"
-            app:fab_colorNormal="#00AAAA"
-            app:fab_colorPressed="#00AAAA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_search"
-            />
+            app:fab_colorNormal="#00AAAA"
+            app:fab_colorPressed="#00AAAA" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/menu_item2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:src="@android:drawable/ic_menu_share"
             app:fab_colorNormal="#00AAAA"
-            app:fab_colorPressed="#00AAAA"
-            />
+            app:fab_colorPressed="#00AAAA" />
 
     </com.github.clans.fab.FloatingActionMenu>
+
+
+    <TextView
+        android:id="@+id/TextView11"
+        android:layout_width="92dp"
+        android:layout_height="@dimen/fab_size_mini"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="500dp"
+        android:text="$: "
+        android:textColor="?attr/colorPrimary"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_anchor="@+id/viewpager" />
+
+    <TextView
+        android:id="@+id/TextView10"
+        android:layout_width="92dp"
+        android:layout_height="@dimen/fab_size_mini"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="500dp"
+        android:text="Text"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_anchor="@+id/viewpager" />
+
 
 </android.support.design.widget.CoordinatorLayout>

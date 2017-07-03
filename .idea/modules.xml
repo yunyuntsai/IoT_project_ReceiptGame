@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IoT_project_ReceiptGame.iml" filepath="$PROJECT_DIR$/IoT_project_ReceiptGame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TesserLibs/TesserLibs.iml" filepath="$PROJECT_DIR$/TesserLibs/TesserLibs.iml" />
       <module fileurl="file://$PROJECT_DIR$/ZXingLibs/ZXingLibs.iml" filepath="$PROJECT_DIR$/ZXingLibs/ZXingLibs.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

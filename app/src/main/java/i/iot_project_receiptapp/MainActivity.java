@@ -7,33 +7,48 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import i.iot_project_receiptapp.Data.ReceiptList;
-import i.iot_project_receiptapp.ReceiptMng.receiptMng;
 import i.iot_project_receiptapp.ReceiptDataBase.Receipt;
+import i.iot_project_receiptapp.ReceiptMng.receiptMng;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    String TAG = "MONEY: ";
     public final static int BASE_YEAR = 106;
+    private TextView moneytxt;
+    public int Totalmoney;
     ReceiptList mReceiptData;
-    MyStorage myStorage;
+    public List<Integer> moneyList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mReceiptData = new ReceiptList(this);
+        initViewPager();
+
+        initMoneyCounter();
         //myStorage = new MyStorage(mReceiptData);
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -43,6 +58,8 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });*/
+
+
         com.github.clans.fab.FloatingActionButton fabSearch = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.menu_item1);
         assert fabSearch != null;
         fabSearch.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +113,46 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    private void initViewPager(){
+        List<Fragment> fragments = getFragments();
+        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(), fragments);
+        ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
+        pager.setAdapter(adapter);
+    }
+    private List<Fragment> getFragments() {
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(PageFragment.newInstance("a", R.drawable.background640480));
+        fragments.add(PageFragment.newInstance("b", R.drawable.blue640480));
+        fragments.add(PageFragment.newInstance("c", R.drawable.green640480));
+
+        return fragments;
+    }
+
+
+    private void initMoneyCounter(){
+
+        if (moneyList.size() == 0) {
+            moneyList.add(0, 0);
+            moneytxt = (TextView) findViewById(R.id.TextView10);
+            moneytxt.setText(String.valueOf(moneyList.get(0)));
+        }
+
+    }
+
+    private void updateMoneyCounter(int money){
+        Totalmoney = Totalmoney + money;
+        moneyList.add(0,Totalmoney);
+        displayMoney(moneyList.get(0));
+
+    }
+
+    private void displayMoney(int money) {
+        moneytxt.setText(String.valueOf(money));
+        Log.d(TAG,String.valueOf(money));
+
+    }
+
 
     @Override
     protected void onPause() {
@@ -156,6 +213,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
 
         } else if (id == R.id.nav_slideshow) {
+            Intent i = new Intent(MainActivity.this, TesseractActivity.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_manage) {
 
@@ -181,6 +240,7 @@ public class MainActivity extends AppCompatActivity
                 String result = data.getStringExtra("SCAN_RESULT");
                 if(receiptMng.parserQRcode(mReceiptData,result)==1){
                     showNextDialog(R.string.add_success);//新增成功
+                    updateMoneyCounter(10);
 
                 }else{
                     showNextDialog(R.string.add_isExitTip);//統一發票已存在
